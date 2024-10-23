@@ -1,7 +1,7 @@
 # PHP
 Tutorial und Project
 The Reverse Hash Application
-============================
+=============================
 
 This application uses a very simple brute force attack to 
 "reverse" an MD5 hash.  It is really not reversing the hash
