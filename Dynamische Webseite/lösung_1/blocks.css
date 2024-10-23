@@ -1,0 +1,47 @@
+   body {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    height: 100vh;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+#link {
+    text-align: center;
+    margin-top: 10px;    
+}
+#link a {
+    text-decoration: none;
+    color: #FEFEFE;
+    background-color: #354EB1;
+   
+    font-size: 18px;
+}
+#one, #two, #three, #four {
+    width: 25% ;
+    padding: 5px;
+    margin: 5px;
+    border: 5px solid;
+    position: fixed;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 1.5;
+}
+#three {
+    top: 0;
+    left: 0;
+    border-color: orange;
+}
+#two {
+    top: 0;
+    right: 0;
+    border-color: green;
+}
+#four {
+    bottom: 0;
+    left: 0;
+    border-color: yellow;
+}
+#one {
+    bottom: 0;
+    right: 0;
+    border-color: blue;
+}
