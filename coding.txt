@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test PHP</title>
+</head>
+
+<?php
+$backgroundColor = "aqua";
+
+if (isset($_GET["change-backgroundcolor"])) {
+    $backgroundColor = "yellow";
+
+}
+
+?>
+
+<body style="background-color: <?php echo $backgroundColor; ?>;">
+
+
+    <a href="?change-backgroundcolor">Hintergrundfarbe ändern</a>
+
+    <br><br>
+<?php
+   $host = "localhost" ;
+   $username = "root";
+   $password = "";
+   $database = "test";
+
+   //Create connection
+
+   $conn = new mysqli($host, $username, $password, $database ) ;
+
+
+   //Check connection
+
+   if($conn ->connect_error) {
+    die("Verbindung fehlgeschlagen: "  .$conn -> connect_error) ;
+   
+   } else {
+    echo "Verbindung erfolgreich hergestellt! " ;
+   } 
+?>
+
+<table>
+    <tr>
+        <th>Vorname</th>
+        <th>Forename</th>
+        <th>Surename</th>
+        <th>Age</th>
+        <th>Position</th>
+        <th>Active</th>
+        <th>Role_ID</th>
+    </tr>
+
+
+
+<?php
+    //Sql Abfrage
+
+    $query = "Select * FROM user_repository" ;
+    $result = $conn -> query($query); //Sorguyu calistirir
+
+    if($result -> num_rows > 0) {
+        // Her satiri döngü ile yazdir
+        while ($row = $result-> fetch_assoc()) {
+            echo "<tr>" ;
+            echo "<td>" . $row["ID"] . "</td>";
+            echo "<td>" . $row["FORENAME"] . "</td>";
+            echo "<td>" . $row["SURENAME"] . "</td>";
+            echo "<td>" . $row["AGE"] . "</td>";
+            echo "<td>" . $row["POSITION"] . "</td>";
+            echo "<td>" . $row["ACTIVE"] . "</td>" ;
+            echo "<td>" . $row["ROLE_ID"] . "</td>" ;
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td colspan=`7`> Keine Daten gefunden</td></tr>";
+    }
+?>
+</table>
+<br><br>
+-------------------------------------------------------
+<br><br>
+
+<form action="" method="post">
+    <input type="text" name="FORENAME" id="" place_holder="Vorname">
+    <input type="text" name="SURNAME" id="" place_holder="Vorname">
+    <input type="text" name="AGE" id="" place_holder="Vorname">
+    <input type="text" name="POSITION" id="" place_holder="Vorname">
+    <input type="text" name="ROLE_ID" id="" place_holder="Vorname">
+    <button type="submit">Neuen Mitarbeiter Anlegen</button>
+
+</form>
+
+<?php
+if (
+    isset($_POST["FORENAME"]) 
+    && isset($_POST["SURENAME"])
+    && isset($_POST["AGE"])
+    && isset($_POST["POSITION"])
+    && isset($_POST["ACTIVE"])
+    && isset($_POST["ROLE_ID"])
+) {
+    $forename = $_POST["FORENAME"];
+    $surname = $_POST["SURENAME"];
+    $age = $_POST["AGE"];
+    $position = $_POST["POSITION"];
+    $active = $_POST["ACTIVE"];
+    $role_id = $_POST["ROLE_ID"];
+
+    $insertQuery = "INSERT INTO user_repository (FORENAME, SURENAME, AGE, POSITION, ACTIVE, ROLE_ID) 
+                    VALUES ('$forename', '$surname', '$age', '$position', '$active', '$role_id')";
+
+    if ($conn->query($insertQuery) === true) {
+        echo "<h4>Mitabeiter <strong>" . $forename . " " . $surname . "</strong> erfolgreich angelegt</h4>";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+
+
+    
+
+?>
+
+
+
+   <br><br>
+-------------------------------------------------------------------------
+    <br><br>
+
+    <form action="" method="get">
+        <input type="number"  name="name" placeholder="Dein Name">
+        <br><br>
+
+     
+        <input type="number" id="" name="age" placeholder="Alter">
+        <br><br>
+
+        <input type="hidden" id="" name=<?php $backgroundColor?>>
+        <br><br>
+
+        <input type="submit" value="Absenden">
+
+
+
+-------------------------------------------------------------------
+<?php
+
+
+
+ include "header.php";
+ include "navigation.php";
+
+
+
+if (isset($_GET["content"]) && $_GET["content"] == "start" ) {
+    include_once "content.php";
+} else  {
+    include_once "content-unterseite.php";
+
+}
+/*
+$content = 'start';
+
+if (isset($_GET["content"])) {
+    $content = $_GET["content"];
+}
+
+if ($content == 'start') {
+   include 'content.php';
+} elseif ($content == 'unterseite') {
+    include 'content-unterseite.php';
+} else {
+    echo '404 - Diese Seite gibt es nicht';
+}*/
+ include "footer.php";
+ ?>
+----------------------------------------------------------
+<div class="hallo">
+    <h2 class="test"> Wirklich nur ein Test </h2>
+
+
+</div>
+
+<div>
+    <form action="" method="get">
+        <label for="zahl1">Zahl 1:</label>
+        <input type="number" id="" name="zahl1" >
+        <br><br>
+
+        <label for="zahl2">Zahl 2:</label>
+        <input type="number" id="" name="zahl2">
+        <br><br>
+
+        <input type="submit" value="addieren">
+
+    </form>
+</div>
+
+
+    <?php
+    if (isset ($_GET["zahl1"]) && isset ($_GET["zahl2"]) && is_numeric ($_GET["zahl1"]) && is_numeric ($_GET["zahl1"])) {
+
+        $zahl1 = $_GET["zahl1"];
+        $zahl2 = $_GET["zahl2"];
+        $Ergebnis = $zahl1 + $zahl2;
+
+        echo "<p>Ergebnis:  . $Ergebnis </p>";
+
+        }
+
+        else {
+            echo "Es würde keine zahlen eingegeben";
+        }
+
+    ?>
+----------------------------------------------------------
+    <br><br>
+
+
+    <form action="" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="" name="name" >
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="" name="password">
+        <br><br>
+
+        <input type="submit" value="Absenden">
+
+    </form>
+
+<br><br>
+
+<?php
+    if (isset ($_POST["name"]) && isset ($_POST["password"])) {
+
+        $name = $_POST["name"];
+        $password = $_POST["password"];
+       
+        echo "Der name lautet: " .$name;
+        echo "<br>";
+        echo "Password ist: " .$password;
+    }
+    ?>
+    
+
+
+
+</body>
+</html>
+
